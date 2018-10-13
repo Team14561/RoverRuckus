@@ -39,18 +39,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Team 14561
  */
 
-@TeleOp(name="TankDrive", group="SimpleBot")
+@TeleOp(name="TankDrive", group="RoverRuckus")
 public class TankDrive extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
     private DriveTrain drivetrain;
-
+    private Arm arm;
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
         drivetrain = new DriveTrain(hardwareMap, telemetry);
+        arm = new Arm(hardwareMap, telemetry);
     }
 
     /*
@@ -74,6 +75,7 @@ public class TankDrive extends OpMode
     @Override
     public void loop() {
         drivetrain.tankDrive(gamepad1);
+        arm.manual(gamepad2);
 
         // Show the elapsed game time.
         if (RobotMap.DISPLAY_TIME) {
