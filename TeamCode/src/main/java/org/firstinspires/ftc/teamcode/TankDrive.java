@@ -45,6 +45,7 @@ public class TankDrive extends OpMode
     private ElapsedTime runtime = new ElapsedTime();
     private DriveTrain drivetrain;
     private Arm arm;
+    private Claw claw;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -52,6 +53,7 @@ public class TankDrive extends OpMode
     public void init() {
         drivetrain = new DriveTrain(hardwareMap, telemetry);
         arm = new Arm(hardwareMap, telemetry);
+        claw = new Claw(hardwareMap, telemetry);
     }
 
     /*
@@ -76,6 +78,7 @@ public class TankDrive extends OpMode
     public void loop() {
         drivetrain.tankDrive(gamepad1);
         arm.manual(gamepad2);
+        claw.buttonServo(gamepad2);
 
         // Show the elapsed game time.
         if (RobotMap.DISPLAY_TIME) {

@@ -24,4 +24,13 @@ public class RobotMap{
     public static final Boolean DISPLAY_MOTOR_VALUES = true;
     public static final Boolean REVERSE_JOYSTICKS = false;
     public static final double SPEEDLIMIT = 0.5;
+
+    //Claw Parameters
+    public static final String CLAW_SERVO = "claw_servo";
+    public static final double RANGE = 180.0;
+    public static final double OPEN = 0.0/RANGE;
+    public static final double CLOSED = 180.0/RANGE;
+    public static final double MINIMUM_ANGLE = 0.0;
+    public static final double MAXIMUM_ANGLE = 1.0;
+    public static final double SERVO_ANGLE_DEFAULT = CLOSED;
 }
