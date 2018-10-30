@@ -12,8 +12,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Arm {
 
     // Class variables
-    DcMotor leftMotor, rightMotor;
+    DcMotor leftMotor, rightMotor, encoderMotor;
     Telemetry telemetry;
+    int encoderZero;
 
     /**
      * Constructor for the drivetrain
@@ -31,10 +32,14 @@ public class Arm {
         // Set the motor directions
         leftMotor.setDirection(RobotMap.LEFT_ARM_DIRECTION);
         rightMotor.setDirection(RobotMap.RIGHT_ARM_DIRECTION);
+
+        //Set the encoder starting position
+        encoderMotor = leftMotor;
+        encoderZero = encoderMotor.getCurrentPosition();
     }
 
     /**
-     * Set the drivetrain motor power for both left and right motors
+     * Set the arm motor power for both left and right motors
      *
      * @param gamepad The gamepad from which to read joystick values
      */
@@ -47,6 +52,11 @@ public class Arm {
         power *= RobotMap.ARM_SPEED;
 
         setPower(power);
+
+        //output the encoder value//
+        if (RobotMap.DISPLAY_ENCODER_VALUES) {
+            telemetry.addData("Arm Encoder", encoderDegrees());
+        }
     }
 
     private void setPower(double power  ){
@@ -56,8 +66,6 @@ public class Arm {
         // Send calculated power to motors
         leftMotor.setPower(power);
         rightMotor.setPower(power);
-
-
     }
 
     private double safetyCheck(double inp) {
@@ -65,6 +73,10 @@ public class Arm {
         out = Math.max(-1.0, out);
         out = Math.min(1.0, out);
         return out;
+    }
+
+    private double encoderDegrees() {
+        return (encoderMotor.getCurrentPosition()-encoderZero)/RobotMap.ARM_SCALE;
     }
 
 }

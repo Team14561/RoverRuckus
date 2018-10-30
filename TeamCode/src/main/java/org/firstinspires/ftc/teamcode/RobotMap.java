@@ -18,7 +18,7 @@ public class RobotMap{
     public static final String RIGHT_ARM_MOTOR = "arm_right";
     public static final DcMotor.Direction LEFT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
     public static final DcMotor.Direction RIGHT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
-    public static final double ARM_SPEED = 0.5;
+    public static final double ARM_SPEED = 0.4;
 
     //TankDrive Parameters
     public static final Boolean DISPLAY_MOTOR_VALUES = true;
@@ -27,10 +27,14 @@ public class RobotMap{
 
     //Claw Parameters
     public static final String CLAW_SERVO = "claw_servo";
-    public static final double RANGE = 180.0;
-    public static final double OPEN = 0.0/RANGE;
-    public static final double CLOSED = 180.0/RANGE;
-    public static final double MINIMUM_ANGLE = 0.0;
-    public static final double MAXIMUM_ANGLE = 1.0;
-    public static final double SERVO_ANGLE_DEFAULT = CLOSED;
+    public static final double SERVO_OPEN = 0.0;
+    public static final double SERVO_CLOSED = 1.0;
+    public static final double MINIMUM_SERVO_POSITION = 0.0;
+    public static final double MAXIMUM_SERVO_POSITION = 1.0;
+    public static final double SERVO_ANGLE_DEFAULT = SERVO_CLOSED;
+
+    //Encoder Parameters
+    public static final Boolean DISPLAY_ENCODER_VALUES = true;
+    public static final double MOTOR_SCALE = -1440.0 / (4.0 * 3.14159); //counts per inch
+    public static final double ARM_SCALE = 1.0; //counts per degree
 }

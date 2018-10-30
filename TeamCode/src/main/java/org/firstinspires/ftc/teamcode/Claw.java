@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -32,23 +31,35 @@ public class Claw {
     /**
      * Move Servo
      *
-     *
      * @param gamepad The gamepad from which to read joystick values
      */
-   public void buttonServo(Gamepad gamepad){
-       double servoAngle = RobotMap.SERVO_ANGLE_DEFAULT;
+    private boolean clawOpen = false;
+    public void buttonServo(Gamepad gamepad){
+        double servoAngle = RobotMap.SERVO_ANGLE_DEFAULT;
         if (gamepad.b){
-            servoAngle = RobotMap.OPEN;
+            servoAngle = RobotMap.SERVO_OPEN;
         }
+/*
+       if (gamepad.a){
+           if (clawOpen){
+               clawOpen = false;
+               servoAngle = RobotMap.SERVO_CLOSED;
+           }
+           else {
+               clawOpen = true;
+               servoAngle = RobotMap.SERVO_OPEN;
+           }
 
+       }
+*/
         servoAngle = safetyCheck(servoAngle);
         clawServo.setPosition(servoAngle);
    }
 
     private double safetyCheck(double inp) {
         double out = inp;
-        out = Math.max(RobotMap.MINIMUM_ANGLE, out);
-        out = Math.min(RobotMap.MAXIMUM_ANGLE, out);
+        out = Math.max(RobotMap.MINIMUM_SERVO_POSITION, out);
+        out = Math.min(RobotMap.MAXIMUM_SERVO_POSITION, out);
         return out;
     }
 

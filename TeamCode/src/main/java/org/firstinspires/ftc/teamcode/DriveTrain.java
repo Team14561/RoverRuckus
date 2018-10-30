@@ -14,6 +14,7 @@ public class DriveTrain {
     // Class variables
     DcMotor leftMotor, rightMotor;
     Telemetry telemetry;
+    int leftZero, rightZero;
 
     /**
      * Constructor for the drivetrain
@@ -31,10 +32,14 @@ public class DriveTrain {
         // Set the motor directions
         leftMotor.setDirection(RobotMap.LEFT_DRIVE_DIRECTION);
         rightMotor.setDirection(RobotMap.RIGHT_DRIVE_DIRECTION);
+
+        //Set the encoder starting positions
+        leftZero = leftMotor.getCurrentPosition();
+        rightZero = rightMotor.getCurrentPosition();
     }
 
     /**
-     * Set the drivetrain motor power for both left and right motors
+     * Set the drivetrain motor power for both left and right motors using the joystick values
      *
      * @param gamepad The gamepad from which to read joystick values
      */
@@ -55,6 +60,12 @@ public class DriveTrain {
         }
 
         setPower(leftPower, rightPower);
+
+        // Output Encoder Values
+        if (RobotMap.DISPLAY_ENCODER_VALUES){
+            telemetry.addData("Left Encoder", leftEncoderInches());
+            telemetry.addData("Right Encoder", rightEncoderInches());
+        }
     }
 
     private void setPower(double leftPower, double rightPower){
@@ -78,6 +89,13 @@ public class DriveTrain {
         out = Math.max(-1.0, out);
         out = Math.min(1.0, out);
         return out;
+    }
+
+    private double leftEncoderInches() {
+        return (leftMotor.getCurrentPosition()-leftZero) / RobotMap.MOTOR_SCALE;
+    }
+    private double rightEncoderInches() {
+        return (rightMotor.getCurrentPosition()-rightZero) / RobotMap.MOTOR_SCALE;
     }
 
 }

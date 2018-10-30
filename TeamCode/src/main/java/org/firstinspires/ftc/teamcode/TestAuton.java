@@ -29,70 +29,53 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+
 
 /**
- * Code for Rover Ruckus FTC 2018
+ * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
+ * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
+ * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
+ * class is instantiated on the Robot Controller and executed.
  *
- * Team 14561
+ * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
+ * It includes all the skeletal structure that all linear OpModes contain.
+ *
+ * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
+ * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="TankDrive", group="RoverRuckus")
-public class TankDrive extends OpMode
-{
+@Autonomous(name="TestAuton", group="Rover Ruckus")
+public class TestAuton extends LinearOpMode {
+
     private ElapsedTime runtime = new ElapsedTime();
     private DriveTrain drivetrain;
     private Arm arm;
     private Claw claw;
-    /*
-     * Code to run ONCE when the driver hits INIT
-     */
+
     @Override
-    public void init() {
+    public void runOpMode() {
+
+        // Initialize hardware
         drivetrain = new DriveTrain(hardwareMap, telemetry);
         arm = new Arm(hardwareMap, telemetry);
         claw = new Claw(hardwareMap, telemetry);
-    }
 
-    /*
-     * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
-     */
-    @Override
-    public void init_loop() {
-    }
-
-    /*
-     * Code to run ONCE when the driver hits PLAY
-     */
-    @Override
-    public void start() {
+        // Wait for the game to start (driver presses PLAY)
+        waitForStart();
         runtime.reset();
-    }
 
-    /*
-     * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
-     */
-    @Override
-    public void loop() {
-        drivetrain.tankDrive(gamepad1);
-        arm.manual(gamepad2);
-        claw.buttonServo(gamepad2);
-
-        // Show the elapsed game time.
-        if (RobotMap.DISPLAY_TIME) {
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
+        // Sample loop for one stage of autonomous
+        while(runtime.time() < 10) {
+            telemetry.addData("Time: ", runtime.time());
+            telemetry.update();
         }
 
-        telemetry.update();
     }
-
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
-    @Override
-    public void stop() {
-    }
-
 }
