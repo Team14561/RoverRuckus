@@ -36,5 +36,5 @@ public class RobotMap{
     //Encoder Parameters
     public static final Boolean DISPLAY_ENCODER_VALUES = true;
     public static final double MOTOR_SCALE = -1440.0 / (4.0 * 3.14159); //counts per inch
-    public static final double ARM_SCALE = 1.0; //counts per degree
+    public static final double ARM_SCALE = -21.67; //counts per degree
 }

@@ -39,7 +39,7 @@ public class Claw {
         if (gamepad.b){
             servoAngle = RobotMap.SERVO_OPEN;
         }
-/*
+
        if (gamepad.a){
            if (clawOpen){
                clawOpen = false;
@@ -51,7 +51,8 @@ public class Claw {
            }
 
        }
-*/
+
+
         servoAngle = safetyCheck(servoAngle);
         clawServo.setPosition(servoAngle);
    }

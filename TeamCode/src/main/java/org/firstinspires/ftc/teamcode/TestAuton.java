@@ -71,6 +71,10 @@ public class TestAuton extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
+        //Stage 1 is landing the robot.
+        arm.land();
+
+
         // Sample loop for one stage of autonomous
         while(runtime.time() < 10) {
             telemetry.addData("Time: ", runtime.time());

@@ -79,4 +79,17 @@ public class Arm {
         return (encoderMotor.getCurrentPosition()-encoderZero)/RobotMap.ARM_SCALE;
     }
 
+    public void land() {
+
+        //encoder starting pos. 260
+        double armSpeed = 0.4;
+        double maxEncoderDegree = 270.0;
+        setPower(armSpeed);
+        while (encoderDegrees() < maxEncoderDegree) {
+            telemetry.addData("Arm Encoder", encoderDegrees());
+            telemetry.update();
+        }
+        setPower(0.0);
+    }
+
 }
