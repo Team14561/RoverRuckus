@@ -125,15 +125,14 @@ public class DriveTrain {
     public void unhook() {
         double leftSpeed = 0.0;
         double rightSpeed = -0.5;
-        double StartEncoder = leftEncoderInches();
-        double endingEncoder = StartEncoder + 2;
+        double StartEncoder = rightEncoderInches();
+        double endingEncoder = StartEncoder + 12.0;
         setPower(leftSpeed, rightSpeed);
-        while (leftEncoderInches() < endingEncoder) {
-            telemetry.addData("Left Encoder", leftEncoderInches());
+        while (rightEncoderInches() < endingEncoder) {
+            telemetry.addData("Right Encoder", rightEncoderInches());
             telemetry.update();
         }
         setPower(0.0,0.0);
-
     }
 }
 

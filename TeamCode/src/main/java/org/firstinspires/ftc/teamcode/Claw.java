@@ -35,28 +35,20 @@ public class Claw {
      */
     private boolean clawOpen = false;
     private boolean aReleased = true;
-    public void buttonServo(Gamepad gamepad){
+    public void buttonServo(Gamepad gamepad) {
         double servoAngle = RobotMap.SERVO_ANGLE_DEFAULT;
 
-       if (gamepad.a){
-           if(aReleased) {
-               if (clawOpen) {
-                   clawOpen = false;
-                   servoAngle = RobotMap.SERVO_CLOSED;
-               } else {
-                   clawOpen = true;
-                   servoAngle = RobotMap.SERVO_OPEN;
-               }
-           }
-           aReleased = false;
-       }
-       else{
-           aReleased = true;
-       }
-
-        if (gamepad.b){
-            servoAngle = RobotMap.SERVO_OPEN;
+        if (gamepad.a) {
+            if (aReleased) clawOpen = !clawOpen;
+            aReleased = false;
         }
+        else{
+            aReleased = true;
+        }
+        servoAngle = (clawOpen) ? RobotMap.SERVO_OPEN : RobotMap.SERVO_CLOSED;
+
+        if (gamepad.b)servoAngle = RobotMap.SERVO_OPEN;
+
         servoAngle = safetyCheck(servoAngle);
         clawServo.setPosition(servoAngle);
    }

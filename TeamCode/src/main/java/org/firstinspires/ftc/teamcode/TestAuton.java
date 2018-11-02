@@ -72,8 +72,8 @@ public class TestAuton extends LinearOpMode {
         runtime.reset();
 
         //Stage 1 is landing the robot.
-        arm.land();
-        arm.moveUp();
+        //arm.land();
+        //arm.moveUp();
         drivetrain.unhook();
 
         // Sample loop for one stage of autonomous
