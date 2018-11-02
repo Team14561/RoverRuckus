@@ -23,7 +23,8 @@ public class RobotMap{
     //TankDrive Parameters
     public static final Boolean DISPLAY_MOTOR_VALUES = true;
     public static final Boolean REVERSE_JOYSTICKS = false;
-    public static final double SPEEDLIMIT = 0.5;
+    public static final double HIGHSPEED_LIMIT = 0.8;
+    public static final double LOWSPEED = 0.3;
 
     //Claw Parameters
     public static final String CLAW_SERVO = "claw_servo";

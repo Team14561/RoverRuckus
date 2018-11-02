@@ -46,7 +46,7 @@ public class Arm {
     public void manual(Gamepad gamepad) {
 
         // Get joystick values from gamepad
-        double power  = gamepad.right_stick_y;
+        double power  = gamepad.left_stick_y;
 
         // Limit speed of drivetrain
         power *= RobotMap.ARM_SPEED;
@@ -81,12 +81,22 @@ public class Arm {
 
     public void land() {
 
-        //encoder starting pos. 260
         double armSpeed = 0.4;
-        double maxEncoderDegree = 270.0;
+        double maxEncoderDegree = 290.0;
         setPower(armSpeed);
         while (encoderDegrees() < maxEncoderDegree) {
-            telemetry.addData("Arm Encoder", encoderDegrees());
+            telemetry.addData("Arm Encoder Land", encoderDegrees());
+            telemetry.update();
+        }
+        setPower(0.0);
+    }
+    public void moveUp() {
+
+        double armSpeed = -0.4;
+        double maxEncoderDegree = 280.0;
+        setPower(armSpeed);
+        while (encoderDegrees() > maxEncoderDegree) {
+            telemetry.addData("Arm Encoder Pull Up", encoderDegrees());
             telemetry.update();
         }
         setPower(0.0);

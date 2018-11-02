@@ -20,7 +20,7 @@ public class DriveTrain {
      * Constructor for the drivetrain
      *
      * @param hardwareMap the robot instance of the hardware map
-     * @param telemetry the robot instance of the telemetry object
+     * @param telemetry   the robot instance of the telemetry object
      */
     public DriveTrain(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
@@ -43,15 +43,37 @@ public class DriveTrain {
      *
      * @param gamepad The gamepad from which to read joystick values
      */
+
+    Boolean highSpeed = true;
+
+
     public void tankDrive(Gamepad gamepad) {
 
+        if (gamepad.left_bumper) {
+            highSpeed = false;
+
+        }
+        else if (gamepad.right_bumper){
+            highSpeed = true;
+        }
+
+
+        double speedLimit;
+        if (highSpeed) {
+            speedLimit = RobotMap.HIGHSPEED_LIMIT;
+        }
+         else {
+            speedLimit = RobotMap.LOWSPEED;
+        }
+
         // Get joystick values from gamepad
-        double leftPower  = gamepad.left_stick_y;
+        double leftPower = gamepad.left_stick_y;
         double rightPower = gamepad.right_stick_y;
 
         // Limit speed of drivetrain
-        leftPower *= RobotMap.SPEEDLIMIT;
-        rightPower *= RobotMap.SPEEDLIMIT;
+        leftPower *= speedLimit;
+        rightPower *= speedLimit;
+
 
         // Reverse joystick values if requested
         if (RobotMap.REVERSE_JOYSTICKS) {
@@ -62,13 +84,13 @@ public class DriveTrain {
         setPower(leftPower, rightPower);
 
         // Output Encoder Values
-        if (RobotMap.DISPLAY_ENCODER_VALUES){
+        if (RobotMap.DISPLAY_ENCODER_VALUES) {
             telemetry.addData("Left Encoder", leftEncoderInches());
             telemetry.addData("Right Encoder", rightEncoderInches());
         }
     }
 
-    private void setPower(double leftPower, double rightPower){
+    private void setPower(double leftPower, double rightPower) {
         // Make sure power levels are within expected range
         leftPower = safetyCheck(leftPower);
         rightPower = safetyCheck(rightPower);
@@ -92,10 +114,26 @@ public class DriveTrain {
     }
 
     private double leftEncoderInches() {
-        return (leftMotor.getCurrentPosition()-leftZero) / RobotMap.MOTOR_SCALE;
-    }
-    private double rightEncoderInches() {
-        return (rightMotor.getCurrentPosition()-rightZero) / RobotMap.MOTOR_SCALE;
+        return (leftMotor.getCurrentPosition() - leftZero) / RobotMap.MOTOR_SCALE;
     }
 
+    private double rightEncoderInches() {
+        return (rightMotor.getCurrentPosition() - rightZero) / RobotMap.MOTOR_SCALE;
+    }
+
+
+    public void unhook() {
+        double leftSpeed = 0.0;
+        double rightSpeed = -0.5;
+        double StartEncoder = leftEncoderInches();
+        double endingEncoder = StartEncoder + 2;
+        setPower(leftSpeed, rightSpeed);
+        while (leftEncoderInches() < endingEncoder) {
+            telemetry.addData("Left Encoder", leftEncoderInches());
+            telemetry.update();
+        }
+        setPower(0.0,0.0);
+
+    }
 }
+

@@ -34,25 +34,29 @@ public class Claw {
      * @param gamepad The gamepad from which to read joystick values
      */
     private boolean clawOpen = false;
+    private boolean aReleased = true;
     public void buttonServo(Gamepad gamepad){
         double servoAngle = RobotMap.SERVO_ANGLE_DEFAULT;
+
+       if (gamepad.a){
+           if(aReleased) {
+               if (clawOpen) {
+                   clawOpen = false;
+                   servoAngle = RobotMap.SERVO_CLOSED;
+               } else {
+                   clawOpen = true;
+                   servoAngle = RobotMap.SERVO_OPEN;
+               }
+           }
+           aReleased = false;
+       }
+       else{
+           aReleased = true;
+       }
+
         if (gamepad.b){
             servoAngle = RobotMap.SERVO_OPEN;
         }
-
-       if (gamepad.a){
-           if (clawOpen){
-               clawOpen = false;
-               servoAngle = RobotMap.SERVO_CLOSED;
-           }
-           else {
-               clawOpen = true;
-               servoAngle = RobotMap.SERVO_OPEN;
-           }
-
-       }
-
-
         servoAngle = safetyCheck(servoAngle);
         clawServo.setPosition(servoAngle);
    }
