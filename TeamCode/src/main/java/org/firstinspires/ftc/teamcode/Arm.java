@@ -35,7 +35,12 @@ public class Arm {
 
         //Set the encoder starting position
         encoderMotor = leftMotor;
+        zeroTheEncoder();
+    }
+
+    private void zeroTheEncoder() {
         encoderZero = encoderMotor.getCurrentPosition();
+
     }
 
     /**
@@ -43,19 +48,67 @@ public class Arm {
      *
      * @param gamepad The gamepad from which to read joystick values
      */
+
+    Boolean highSpeed = true;
+
     public void manual(Gamepad gamepad) {
+        // toggle arm speed for latching
+        if (gamepad.left_bumper) {
+            highSpeed = false;
+        }
+        else if (gamepad.right_bumper){
+            highSpeed = true;
+        }
+
+        double speedLimit;
+        if (highSpeed) {
+            speedLimit = RobotMap.HIGHSPEED_LIMIT_ARM;
+        }
+        else {
+            speedLimit = RobotMap.LOWSPEED_ARM;
+        }
 
         // Get joystick values from gamepad
         double power  = gamepad.left_stick_y;
-
         // Limit speed of drivetrain
-        power *= RobotMap.ARM_SPEED;
+        power *= speedLimit;
+
+        //check if we want to go to a set position
+        if (gamepad.left_trigger > 0.5) {
+            double setPoint = RobotMap.ARM_CLIMB;
+            double error = setPoint - encoderDegrees();
+            power = RobotMap.kP * error;
+            if (power > speedLimit) power = speedLimit;
+            if (power < -speedLimit) power = -speedLimit;
+
+        } else if (gamepad.right_trigger > 0.5){
+            double setPoint = RobotMap.PICKUP_POSITION;
+            double error = setPoint - encoderDegrees();
+            power = RobotMap.kP * error;
+            if (power > speedLimit) power = speedLimit;
+            if (power < -speedLimit) power = - speedLimit;
+
+        }
+        else if (gamepad.right_stick_button) {
+            double setPoint = RobotMap.LANDER_STORAGE_DROP;
+            double error = setPoint - encoderDegrees();
+            power = RobotMap.kP * error;
+            if (power > speedLimit) power = speedLimit;
+            if (power < -speedLimit) power = -speedLimit;
+        }
+
+
 
         setPower(power);
 
         //output the encoder value//
         if (RobotMap.DISPLAY_ENCODER_VALUES) {
             telemetry.addData("Arm Encoder", encoderDegrees());
+        }
+
+        //check to see if we want to 0 the encoder
+        if (gamepad.y) {
+            zeroTheEncoder();
         }
     }
 

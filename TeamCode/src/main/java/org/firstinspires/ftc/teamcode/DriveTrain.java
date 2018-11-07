@@ -123,7 +123,7 @@ public class DriveTrain {
 
 
     public void unhook() {
-        double leftSpeed = 0.0;
+        double leftSpeed = 0.3;
         double rightSpeed = -0.5;
         double StartEncoder = rightEncoderInches();
         double endingEncoder = StartEncoder + 12.0;
