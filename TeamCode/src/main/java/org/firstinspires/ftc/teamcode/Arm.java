@@ -155,4 +155,31 @@ public class Arm {
         setPower(0.0);
     }
 
+    public void deployMarker(){
+
+        double armSpeed = -0.4;
+        double maxEncoderDegree = -170.0;
+        zeroTheEncoder();
+        setPower(armSpeed);
+        while (encoderDegrees() > maxEncoderDegree) {
+            telemetry.addData("Arm Encoder Deploy Marker", encoderDegrees());
+            telemetry.update();
+        }
+        setPower(0.0);
+
+    }
+
+    public void depotRaise() {
+
+        double armSpeed = 0.4;
+        double maxEncoderDegree = 20.0;
+       zeroTheEncoder();
+        setPower(armSpeed);
+        while (encoderDegrees() < maxEncoderDegree) {
+            telemetry.addData("Arm Encoder Pull Up", encoderDegrees());
+            telemetry.update();
+        }
+        setPower(0.0);
+    }
+
 }

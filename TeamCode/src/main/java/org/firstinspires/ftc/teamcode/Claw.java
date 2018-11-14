@@ -60,4 +60,12 @@ public class Claw {
         return out;
     }
 
+       public void open(){
+        clawServo.setPosition(RobotMap.SERVO_OPEN);
+    }
+
+    public void close(){
+        clawServo.setPosition(RobotMap.SERVO_CLOSED);
+    }
+
 }

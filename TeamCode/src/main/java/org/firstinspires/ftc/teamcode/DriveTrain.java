@@ -134,5 +134,36 @@ public class DriveTrain {
         }
         setPower(0.0,0.0);
     }
+
+    public void goldToDepot(){
+        double leftSpeed = -0.5;
+        double rightSpeed = 0.3;
+        double StartEncoder = leftEncoderInches();
+        double endingEncoder = StartEncoder + 13.0;
+        setPower (leftSpeed, rightSpeed);
+        while (leftEncoderInches() < endingEncoder) {
+            telemetry.addData("Left Encoder", leftEncoderInches());
+            telemetry.update();
+        }
+        setPower ( 0.0, 0.0);
+
+        leftSpeed = -0.5;
+        rightSpeed = -0.5;
+        StartEncoder = leftEncoderInches();
+        endingEncoder = StartEncoder + 25.0;
+        setPower (leftSpeed, rightSpeed);
+        while (leftEncoderInches() < endingEncoder) {
+            telemetry.addData("Left Encoder", leftEncoderInches());
+            telemetry.addData("Right Encoder", rightEncoderInches());
+            telemetry.update();
+        }
+        setPower ( 0.0, 0.0);
+    }
+
+
+
+
+
+
 }
 
