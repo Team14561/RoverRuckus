@@ -138,10 +138,10 @@ public class DriveTrain {
     public void goldToDepot(){
         double leftSpeed = -0.5;
         double rightSpeed = 0.3;
-        double StartEncoder = leftEncoderInches();
-        double endingEncoder = StartEncoder + 13.0;
+        double StartEncoder = rightEncoderInches();
+        double endingEncoder = StartEncoder - 6.0;
         setPower (leftSpeed, rightSpeed);
-        while (leftEncoderInches() < endingEncoder) {
+        while (rightEncoderInches() > endingEncoder) {
             telemetry.addData("Left Encoder", leftEncoderInches());
             telemetry.update();
         }
@@ -149,10 +149,10 @@ public class DriveTrain {
 
         leftSpeed = -0.5;
         rightSpeed = -0.5;
-        StartEncoder = leftEncoderInches();
+        StartEncoder = rightEncoderInches();
         endingEncoder = StartEncoder + 25.0;
         setPower (leftSpeed, rightSpeed);
-        while (leftEncoderInches() < endingEncoder) {
+        while (rightEncoderInches() < endingEncoder) {
             telemetry.addData("Left Encoder", leftEncoderInches());
             telemetry.addData("Right Encoder", rightEncoderInches());
             telemetry.update();
@@ -160,10 +160,55 @@ public class DriveTrain {
         setPower ( 0.0, 0.0);
     }
 
+    public void backFromDepot() {
+        double leftSpeed = 0.5;
+        double rightSpeed = 0.5;
+        double StartEncoder = rightEncoderInches();
+        double endingEncoder = StartEncoder - 25.0;
+        setPower(leftSpeed, rightSpeed);
+        while (rightEncoderInches() > endingEncoder) {
+            telemetry.addData("Left Encoder", leftEncoderInches());
+            telemetry.addData("Right Encoder", rightEncoderInches());
+            telemetry.update();
+        }
+        setPower ( 0.0, 0.0);
+    }
+
+    public void silverToDepot() {
+        double leftSpeed = -0.3;
+        double rightSpeed = -0.3;
+        double StartEncoder = rightEncoderInches();
+        double endingEncoder = StartEncoder + 18.0;
+        setPower (leftSpeed, rightSpeed);
+        while (rightEncoderInches() < endingEncoder) {
+            telemetry.addData("Left Encoder", leftEncoderInches());
+            telemetry.update();
+        }
+        setPower ( 0.0, 0.0);
+
+        leftSpeed = 0.5;
+        rightSpeed = -0.5;
+        StartEncoder = rightEncoderInches();
+        endingEncoder = StartEncoder + 18.0;
+        setPower (leftSpeed, rightSpeed);
+        while (rightEncoderInches() < endingEncoder) {
+            telemetry.addData("Left Encoder", rightEncoderInches());
+            telemetry.update();
+        }
+        setPower ( 0.0, 0.0);
 
 
+        leftSpeed = -0.5;
+        rightSpeed = -0.5;
+        StartEncoder = rightEncoderInches();
+        endingEncoder = StartEncoder + 30.0;
+        setPower (leftSpeed, rightSpeed);
+        while (rightEncoderInches() < endingEncoder) {
+            telemetry.addData("Left Encoder", leftEncoderInches());
+            telemetry.update();
+        }
+        setPower ( 0.0, 0.0);
 
-
-
+    }
 }
 

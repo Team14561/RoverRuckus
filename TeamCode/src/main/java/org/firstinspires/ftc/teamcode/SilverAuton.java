@@ -47,8 +47,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="GoldAuton", group="Rover Ruckus")
-public class GoldAuton extends LinearOpMode {
+@Autonomous(name="SilverAuton", group="Rover Ruckus")
+public class SilverAuton extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     private DriveTrain drivetrain;
@@ -68,20 +68,22 @@ public class GoldAuton extends LinearOpMode {
         runtime.reset();
 
         //Stage 1 is landing the robot.
-        claw.close();
+       /* claw.close();
         arm.land();
         arm.moveUp();
         drivetrain.unhook();
+        */
 
         // Stage 2 is driving to depot
-        drivetrain.goldToDepot();
-        arm.deployMarker();
+        drivetrain.silverToDepot();
+       /* arm.deployMarker();
         claw.open();
         arm.depotRaise();
-        drivetrain.backFromDepot();
+        drivetrain.backFroFmDepot();
+        */
 
         // Sample loop for one stage of autonomous
-        while(runtime.time() < 10) {
+        while (runtime.time() < 10) {
             telemetry.addData("Time: ", runtime.time());
             telemetry.update();
         }
