@@ -68,19 +68,18 @@ public class SilverAuton extends LinearOpMode {
         runtime.reset();
 
         //Stage 1 is landing the robot.
-       /* claw.close();
+        claw.close();
         arm.land();
         arm.moveUp();
         drivetrain.unhook();
-        */
 
         // Stage 2 is driving to depot
         drivetrain.silverToDepot();
-       /* arm.deployMarker();
+        arm.deployMarker();
         claw.open();
         arm.depotRaise();
-        drivetrain.backFroFmDepot();
-        */
+        drivetrain.backFromDepot();
+
 
         // Sample loop for one stage of autonomous
         while (runtime.time() < 10) {

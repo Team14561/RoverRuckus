@@ -1,10 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 /**
  * Class for controlling the drivetrain of an FTC robot.
@@ -13,8 +18,10 @@ public class DriveTrain {
 
     // Class variables
     DcMotor leftMotor, rightMotor;
+    BNO055IMU gyro;
     Telemetry telemetry;
     int leftZero, rightZero;
+    double gyroZero = 0.0;
 
     /**
      * Constructor for the drivetrain
@@ -36,7 +43,29 @@ public class DriveTrain {
         //Set the encoder starting positions
         leftZero = leftMotor.getCurrentPosition();
         rightZero = rightMotor.getCurrentPosition();
+
+        //Set up gyroscope
+
+        gyro = hardwareMap.get(BNO055IMU.class, "imu");
+        //gyroInit();
+
     }
+
+    public void gyroInit(){
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.loggingEnabled      = true;
+        parameters.loggingTag          = "IMU";
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+        gyro.initialize(parameters);
+        gyro.startAccelerationIntegration(new Position(), new Velocity(), 10);
+
+        gyroZero = gyro.getAngularOrientation().firstAngle;
+    }
+
 
     /**
      * Set the drivetrain motor power for both left and right motors using the joystick values
@@ -87,6 +116,7 @@ public class DriveTrain {
         if (RobotMap.DISPLAY_ENCODER_VALUES) {
             telemetry.addData("Left Encoder", leftEncoderInches());
             telemetry.addData("Right Encoder", rightEncoderInches());
+            telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
         }
     }
 
@@ -178,9 +208,10 @@ public class DriveTrain {
         double leftSpeed = -0.3;
         double rightSpeed = -0.3;
         double StartEncoder = rightEncoderInches();
-        double endingEncoder = StartEncoder + 18.0;
+        double endingEncoder = StartEncoder + 27.0;
         setPower (leftSpeed, rightSpeed);
         while (rightEncoderInches() < endingEncoder) {
+            telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
             telemetry.addData("Left Encoder", leftEncoderInches());
             telemetry.update();
         }
@@ -189,21 +220,28 @@ public class DriveTrain {
         leftSpeed = 0.5;
         rightSpeed = -0.5;
         StartEncoder = rightEncoderInches();
-        endingEncoder = StartEncoder + 18.0;
+        endingEncoder = StartEncoder + 13.0;
+
+        gyroInit();
+        double endingGyro = gyroZero + 67.0;
+
         setPower (leftSpeed, rightSpeed);
-        while (rightEncoderInches() < endingEncoder) {
+      //  while (rightEncoderInches() < endingEncoder) {
+        while(gyro.getAngularOrientation().firstAngle <  endingGyro){
+            telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
             telemetry.addData("Left Encoder", rightEncoderInches());
             telemetry.update();
         }
         setPower ( 0.0, 0.0);
 
 
-        leftSpeed = -0.5;
-        rightSpeed = -0.5;
+        leftSpeed = -0.3;
+        rightSpeed = -0.3;
         StartEncoder = rightEncoderInches();
-        endingEncoder = StartEncoder + 30.0;
+        endingEncoder = StartEncoder + 42.0;
         setPower (leftSpeed, rightSpeed);
         while (rightEncoderInches() < endingEncoder) {
+            telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
             telemetry.addData("Left Encoder", leftEncoderInches());
             telemetry.update();
         }
