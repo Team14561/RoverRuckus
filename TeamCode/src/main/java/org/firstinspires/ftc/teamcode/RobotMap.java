@@ -18,12 +18,12 @@ public class RobotMap{
     public static final String RIGHT_ARM_MOTOR = "arm_right";
     public static final DcMotor.Direction LEFT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
     public static final DcMotor.Direction RIGHT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
-    public static final double HIGHSPEED_LIMIT_ARM = 0.4;
+    public static final double HIGHSPEED_LIMIT_ARM = 0.6; //0.4;
     public static final double LOWSPEED_ARM = 0.2;
     public static final double ARM_CLIMB = -11.02;
-    public static final double PICKUP_POSITION = -200.0;
+    public static final double PICKUP_POSITION = -202.0;
     public static final double LANDER_STORAGE_DROP = -72.6;
-    public static final double kP = 0.02;
+    public static final double kP = 0.05;
 
 
     //TankDrive Parameters

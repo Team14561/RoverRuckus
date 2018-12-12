@@ -146,7 +146,7 @@ public class Arm {
     public void moveUp() {
 
         double armSpeed = -0.4;
-        double maxEncoderDegree = 280.0;
+        double maxEncoderDegree = 285.0;
         setPower(armSpeed);
         while (encoderDegrees() > maxEncoderDegree) {
             telemetry.addData("Arm Encoder Pull Up", encoderDegrees());

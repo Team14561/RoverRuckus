@@ -116,7 +116,7 @@ public class DriveTrain {
         if (RobotMap.DISPLAY_ENCODER_VALUES) {
             telemetry.addData("Left Encoder", leftEncoderInches());
             telemetry.addData("Right Encoder", rightEncoderInches());
-            telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
+            //telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
         }
     }
 
@@ -156,7 +156,7 @@ public class DriveTrain {
         double leftSpeed = 0.3;
         double rightSpeed = -0.5;
         double StartEncoder = rightEncoderInches();
-        double endingEncoder = StartEncoder + 12.0;
+        double endingEncoder = StartEncoder + 4.0; //12.0;
         setPower(leftSpeed, rightSpeed);
         while (rightEncoderInches() < endingEncoder) {
             telemetry.addData("Right Encoder", rightEncoderInches());
@@ -166,10 +166,22 @@ public class DriveTrain {
     }
 
     public void goldToDepot(){
-        double leftSpeed = -0.5;
-        double rightSpeed = 0.3;
+
+        double leftSpeed = -0.8;
+        double rightSpeed = -0.2;
         double StartEncoder = rightEncoderInches();
-        double endingEncoder = StartEncoder - 6.0;
+        double endingEncoder = StartEncoder + 28.0;
+        setPower (leftSpeed, rightSpeed);
+        while (rightEncoderInches() < endingEncoder) {
+            telemetry.addData("Left Encoder", leftEncoderInches());
+            telemetry.update();
+        }
+        setPower ( 0.0, 0.0);
+
+      /*  leftSpeed = -0.5;
+        rightSpeed = 0.5;
+        StartEncoder = rightEncoderInches();
+        endingEncoder = StartEncoder - 24.0;
         setPower (leftSpeed, rightSpeed);
         while (rightEncoderInches() > endingEncoder) {
             telemetry.addData("Left Encoder", leftEncoderInches());
@@ -188,6 +200,7 @@ public class DriveTrain {
             telemetry.update();
         }
         setPower ( 0.0, 0.0);
+        */
     }
 
     public void backFromDepot() {
@@ -208,7 +221,7 @@ public class DriveTrain {
         double leftSpeed = -0.3;
         double rightSpeed = -0.3;
         double StartEncoder = rightEncoderInches();
-        double endingEncoder = StartEncoder + 27.0;
+        double endingEncoder = StartEncoder + 33.0; //27.00
         setPower (leftSpeed, rightSpeed);
         while (rightEncoderInches() < endingEncoder) {
             telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
@@ -223,7 +236,7 @@ public class DriveTrain {
         endingEncoder = StartEncoder + 13.0;
 
         gyroInit();
-        double endingGyro = gyroZero + 67.0;
+        double endingGyro = gyroZero + 62.0; //50.0
 
         setPower (leftSpeed, rightSpeed);
       //  while (rightEncoderInches() < endingEncoder) {
@@ -238,7 +251,7 @@ public class DriveTrain {
         leftSpeed = -0.3;
         rightSpeed = -0.3;
         StartEncoder = rightEncoderInches();
-        endingEncoder = StartEncoder + 42.0;
+        endingEncoder = StartEncoder + 39.0; //42.0;
         setPower (leftSpeed, rightSpeed);
         while (rightEncoderInches() < endingEncoder) {
             telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
