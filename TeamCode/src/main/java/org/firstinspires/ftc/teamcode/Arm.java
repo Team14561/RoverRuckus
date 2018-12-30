@@ -172,7 +172,7 @@ public class Arm {
     public void depotRaise() {
 
         double armSpeed = 0.4;
-        double maxEncoderDegree = 20.0;
+        double maxEncoderDegree = 150.0;
        zeroTheEncoder();
         setPower(armSpeed);
         while (encoderDegrees() < maxEncoderDegree) {

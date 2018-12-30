@@ -78,7 +78,7 @@ public class SilverAuton extends LinearOpMode {
         arm.deployMarker();
         claw.open();
         arm.depotRaise();
-        drivetrain.backFromDepot();
+        drivetrain.silverBackToCrater();
 
 
         // Sample loop for one stage of autonomous
