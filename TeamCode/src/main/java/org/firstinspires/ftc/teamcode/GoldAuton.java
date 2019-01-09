@@ -79,6 +79,7 @@ public class GoldAuton extends LinearOpMode {
         claw.open();
         arm.depotRaise();
         drivetrain.backFromDepot();
+        drivetrain.goldBackToCrater();
 
         // Sample loop for one stage of autonomous
         while(runtime.time() < 10) {

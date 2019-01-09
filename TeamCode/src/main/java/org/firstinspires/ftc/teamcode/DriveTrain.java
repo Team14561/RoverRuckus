@@ -207,7 +207,7 @@ public class DriveTrain {
         double leftSpeed = 0.65;
         double rightSpeed = 0.65;
         double StartEncoder = rightEncoderInches();
-        double endingEncoder = StartEncoder - 25.0;
+        double endingEncoder = StartEncoder - 15.0;
         setPower(leftSpeed, rightSpeed);
         while (rightEncoderInches() > endingEncoder) {
             telemetry.addData("Left Encoder", leftEncoderInches());
@@ -236,7 +236,6 @@ public class DriveTrain {
         rightSpeed = -0.5;
         double endingGyro = gyroZero + 83.0; //50.0
         setPower (leftSpeed, rightSpeed);
-      //  while (rightEncoderInches() < endingEncoder) {
         while(gyro.getAngularOrientation().firstAngle <  endingGyro){
             telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
             telemetry.addData("Left Encoder", rightEncoderInches());
@@ -263,10 +262,11 @@ public class DriveTrain {
         double leftSpeed = 0.65;
         double rightSpeed = 0.65;
         double StartEncoder = rightEncoderInches();
-        double endingEncoder = StartEncoder - 53.0;
+        double endingEncoder = StartEncoder - 47.0;
         setPower(leftSpeed, rightSpeed);
         while (rightEncoderInches() > endingEncoder) {
-            telemetry.addData("Left Encoder", leftEncoderInches());
+            telemetry.addData("Start", StartEncoder);
+            telemetry.addData("Goal", endingEncoder);
             telemetry.addData("Right Encoder", rightEncoderInches());
             telemetry.update();
         }
@@ -275,9 +275,48 @@ public class DriveTrain {
         leftSpeed = 0.2;
         rightSpeed = 0.2;
         StartEncoder = rightEncoderInches();
-        endingEncoder = StartEncoder - 3.0;
+        endingEncoder = StartEncoder - 9.0;
         setPower(leftSpeed, rightSpeed);
         while (rightEncoderInches() > endingEncoder) {
+            telemetry.addData("Left Encoder", leftEncoderInches());
+            telemetry.addData("Right Encoder", rightEncoderInches());
+            telemetry.update();
+        }
+        setPower ( 0.0, 0.0);
+    }
+
+    public void goldBackToCrater(){
+        double leftSpeed = -0.5;
+        double rightSpeed = 0.5;
+        double StartEncoder = rightEncoderInches();
+        double endingEncoder = StartEncoder - 14.0;
+        setPower(leftSpeed, rightSpeed);
+        while (rightEncoderInches() > endingEncoder) {
+            telemetry.addData("Start", StartEncoder);
+            telemetry.addData("Goal", endingEncoder);
+            telemetry.addData("Right Encoder", rightEncoderInches());
+            telemetry.update();
+        }
+        setPower ( 0.0, 0.0);
+
+        leftSpeed = -0.6;
+        rightSpeed = -0.65;
+        StartEncoder = rightEncoderInches();
+        endingEncoder = StartEncoder + 50.0;
+        setPower(leftSpeed, rightSpeed);
+        while (rightEncoderInches() < endingEncoder) {
+            telemetry.addData("Left Encoder", leftEncoderInches());
+            telemetry.addData("Right Encoder", rightEncoderInches());
+            telemetry.update();
+        }
+        setPower ( 0.0, 0.0);
+
+        leftSpeed = -0.3;
+        rightSpeed = -0.2;
+        StartEncoder = rightEncoderInches();
+        endingEncoder = StartEncoder + 8.0;
+        setPower(leftSpeed, rightSpeed);
+        while (rightEncoderInches() < endingEncoder) {
             telemetry.addData("Left Encoder", leftEncoderInches());
             telemetry.addData("Right Encoder", rightEncoderInches());
             telemetry.update();

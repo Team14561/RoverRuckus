@@ -171,9 +171,9 @@ public class Arm {
 
     public void depotRaise() {
 
-        double armSpeed = 0.4;
+        double armSpeed = 0.8;
         double maxEncoderDegree = 150.0;
-       zeroTheEncoder();
+        zeroTheEncoder();
         setPower(armSpeed);
         while (encoderDegrees() < maxEncoderDegree) {
             telemetry.addData("Arm Encoder Pull Up", encoderDegrees());
